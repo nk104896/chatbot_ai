@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrology Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Astrology Appointment Chatbot</h1>
+    <div id="chat-box">
+        <div id="messages"></div>
+    </div>
+    <input type="text" id="user-input" placeholder="Type your message here...">
+    <button id="send-btn">Send</button>
+
+    <script>
+        $(document).ready(function () {
+            $('#send-btn').click(function () {
+                let message = $('#user-input').val();
+                if (message.trim() !== '') {
+                    $('#messages').append('<p><strong>You:</strong> ' + message + '</p>');
+                    $.post('', {message: message, csrfmiddlewaretoken: '{{ csrf_token }}'}, function (data) {
+                        $('#messages').append('<p><strong>Bot:</strong> ' + data.response + '</p>');
+                    });
+                }
+                $('#user-input').val('');
+            });
+        });
+    </script>
+</body>
+</html>
